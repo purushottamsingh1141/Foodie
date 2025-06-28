@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/loginuser", {
+    const response = await fetch("/api/loginuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ const Login = () => {
       localStorage.setItem("authToken", json.authToken);
       setTimeout(() => {
         setSuccess(false);
-        navigate("/"); // Redirect to homepage after success
+        navigate("/");
       }, 500);
     } else {
       setError("❌ Invalid Email or Password");
