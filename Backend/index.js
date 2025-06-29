@@ -21,9 +21,12 @@ app.use(
 app.options("*", cors());
 app.use(express.json());
 
-// ✅ Corrected lowercase route imports
-app.use("/api", require("./routess/CreateUser"));
-app.use("/api", require("./routess/DisplayData"));
+// ✅ Load routes
+console.log("👉 Loading CreateUser route...");
+app.use("/api", require("./routes/CreateUser"));
+
+console.log("👉 Loading DisplayData route...");
+app.use("/api", require("./routes/DisplayData"));
 
 app.get("/", (req, res) => {
   res.send("Hello from backend!");
