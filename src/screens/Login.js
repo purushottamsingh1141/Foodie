@@ -11,13 +11,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/loginuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}/api/loginuser`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      }
+    );
 
     const json = await response.json();
     console.log(json);
@@ -28,7 +31,7 @@ const Login = () => {
       localStorage.setItem("authToken", json.authToken);
       setTimeout(() => {
         setSuccess(false);
-        navigate("/");
+        navigate("/"); // Redirect to homepage after success
       }, 500);
     } else {
       setError("❌ Invalid Email or Password");

@@ -4,7 +4,6 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
 const jwtSecret = "MySuperSecretJWTKey123@!#$";
 // Replace with process.env.JWT_SECRET in production
 

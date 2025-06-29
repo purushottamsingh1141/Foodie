@@ -12,10 +12,15 @@ const port = process.env.PORT || 5000;
 // ✅ Enable CORS for frontend (local + production)
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://your-frontend.vercel.app"], // ✅ Replace with actual deployed frontend URL
+    origin: [
+      "http://localhost:3000",
+      "https://foodie-ezvd7ha1q-purushottam-singhs-projects.vercel.app",
+    ],
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 // ✅ JSON middleware
 app.use(express.json());
