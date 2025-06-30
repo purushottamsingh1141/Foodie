@@ -8,20 +8,24 @@ const Home = () => {
   const [foodItem, setFoodItem] = useState([]);
 
   const loadData = async () => {
-    let response = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/foodData`,
-      {
+    try {
+      const response = await fetch("http://localhost:5000/api/foodData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-      }
-    );
+        body: JSON.stringify({}), // POST requires body
+      });
 
-    response = await response.json();
+      const data = await response.json();
+      console.log("✅ foodItem:", data[0]);
+      console.log("✅ foodCategory:", data[1]);
 
-    setFoodItem(response[0]);
-    setFoodCategory(response[1]);
+      setFoodItem(data[0] || []);
+      setFoodCategory(data[1] || []);
+    } catch (error) {
+      console.error("❌ Failed to fetch data:", error);
+    }
   };
 
   useEffect(() => {
@@ -31,32 +35,33 @@ const Home = () => {
   return (
     <div>
       <ImageCarousel />
+
       <div className="container">
-        {foodCategory.length !== 0
-          ? foodCategory.map((data) => {
-              return (
-                <div key={data._id}>
-                  <h3>{data.CategoryName}</h3>
-                  <hr />
-                  <div className="d-flex flex-wrap justify-content-center">
-                    {foodItem.length !== 0 ? (
-                      foodItem
-                        .filter(
-                          (item) => item.CategoryName === data.CategoryName
-                        )
-                        .map((filterItems) => (
-                          <div key={filterItems._id}>
-                            <Card foodItem={filterItems} />
-                          </div>
-                        ))
-                    ) : (
-                      <div>No Such Data Found</div>
-                    )}
-                  </div>
-                </div>
-              );
-            })
-          : ""}
+        {foodCategory.length > 0 ? (
+          foodCategory.map((category) => (
+            <div key={category._id}>
+              <h3>{category.CategoryName}</h3>
+              <hr />
+
+              {console.log("🧪 Matching items for:", category.CategoryName)}
+              <div className="d-flex flex-wrap justify-content-center">
+                {foodItem
+                  .filter(
+                    (item) =>
+                      item.CategoryName?.toLowerCase().trim() ===
+                      category.CategoryName?.toLowerCase().trim()
+                  )
+                  .map((filteredItem) => (
+                    <div key={filteredItem._id}>
+                      <Card foodItem={filteredItem} />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <h4>📭 No Categories Found</h4>
+        )}
       </div>
     </div>
   );

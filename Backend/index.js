@@ -4,34 +4,35 @@ const mongoDB = require("./db");
 const cors = require("cors");
 require("dotenv").config();
 
+// Connect to MongoDB
 mongoDB();
 
+// Use environment PORT or fallback
 const port = process.env.PORT || 5000;
 
+// Enable CORS for localhost frontend (React)
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://foodie-ezvd7ha1q-purushottam-singhs-projects.vercel.app",
-    ],
+    origin: ["http://localhost:3000", "https://your-vercel-url.vercel.app"],
     credentials: true,
   })
 );
 
-app.options("*", cors());
 app.use(express.json());
 
-// ✅ Load routes
+// Routes
 console.log("👉 Loading CreateUser route...");
-app.use("/api", require("./routes/CreateUser"));
+app.use("/api", require("./Routes/CreateUser"));
 
 console.log("👉 Loading DisplayData route...");
-app.use("/api", require("./routes/DisplayData"));
+app.use("/api", require("./Routes/DisplayData"));
 
+// Root route
 app.get("/", (req, res) => {
-  res.send("Hello from backend!");
+  res.send("Hello from backend (localhost)!");
 });
 
+// Start server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`🚀 Server is running on http://localhost:${port}`);
 });

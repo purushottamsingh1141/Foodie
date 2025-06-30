@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,19 +13,18 @@ const Signup = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(""); // Optional: for error popup
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/createuser`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+    const response = await fetch("http://localhost:5000/api/createuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
     const json = await response.json();
     console.log(json);
@@ -43,7 +42,10 @@ const Signup = () => {
         password: "",
         location: "",
       });
-      setTimeout(() => setSuccess(false), 3000);
+      setTimeout(() => {
+        setSuccess(false);
+        navigate("/login"); // 👈 Redirect after success
+      }, 1500);
     }
   };
 
