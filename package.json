@@ -15,8 +15,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "serve -s build",         // ✅ For Railway/Netlify/Vercel deployment
-  "build": "react-scripts build",    // ✅ Optimized React build
+  "start": "serve -s build",        
+  "build": "react-scripts build",    
   "dev": "react-scripts start" ,      
     "test": "react-scripts test",
     "eject": "react-scripts eject"
