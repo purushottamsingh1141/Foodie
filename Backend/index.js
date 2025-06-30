@@ -14,7 +14,7 @@ const port = process.env.PORT || 5000;
 app.use(
   cors({
     origin: ["https://foodie-oppwd772a-purushottam-singhs-projects.vercel.app/"],
-    method: ["GET", "POST", "PUT", "PATCH",]
+    method: ["GET", "POST", "PUT", "PATCH"],
     credentials: true,
   })
 );
