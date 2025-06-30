@@ -13,7 +13,8 @@ const port = process.env.PORT || 5000;
 // Enable CORS for localhost frontend (React)
 app.use(
   cors({
-    origin: ["https://foodie-g41l.onrender.com/", "https://foodie-oppwd772a-purushottam-singhs-projects.vercel.app/"],
+    origin: ["https://foodie-oppwd772a-purushottam-singhs-projects.vercel.app/"],
+    method: ["GET", "POST", "PUT", "PATCH",]
     credentials: true,
   })
 );
